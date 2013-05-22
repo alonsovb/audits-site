@@ -1,5 +1,5 @@
 <header>
-	<a href=<?php echo base_url(); ?>><h1>CTEC: Reservaciones</h1></a>
+	<a href=<?php echo base_url(); ?>><h1>Audits</h1></a>
 </header>
 <nav class="main-nav">
 	<ul>
