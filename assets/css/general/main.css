@@ -1,0 +1,27 @@
+body {
+	font-family: 'Trebuchet MS', serif;
+	font-size: 14px;
+}
+
+.title {
+	text-decoration: none;
+	color: green;
+	float: left;
+}
+
+.title > h1 {
+	margin-top: 0;
+}
+
+.main-nav {
+	float: right;
+}
+.main-nav > ul > li {
+	list-style-type: none;
+	display: inline;
+}
+
+.wrapper {
+	float: left;
+	clear: both;
+}

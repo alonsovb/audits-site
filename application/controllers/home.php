@@ -4,22 +4,23 @@ class Home extends CI_Controller {
 
 	public function index()
 	{
-		if ($this->session->userdata('user') === false) {
-			$data['title'] = 'Audits';
-			$data['js']    = array();
-			$data['css']   = array();
+		$data['title'] = 'Audits';
+		$data['js']    = array();
+		$data['css']   = array('general/main');
 
+		if ($this->session->userdata('username') === false) {
 			$this->load->view('general/head', $data);
 			$this->load->view('general/header');
 		} else {
-			$data['title'] = 'Audits';
-			$data['js']    = array();
-			$data['css']   = array();
-
-			// $data['username'] = $this->session->userdata('usuario')->name;
+			$data['username'] = $this->session->userdata('name');
 			
+			$audit1['name'] = '123';
+			$data['audits'] = array($audit1);
+
 			$this->load->view('general/head', $data);
 			$this->load->view('general/header', $data);
+
+			$this->parser->parse('home/audit_list', $data);
 		}
 		$this->load->view('general/footer');
 	}
