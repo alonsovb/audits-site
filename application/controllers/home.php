@@ -12,10 +12,12 @@ class Home extends CI_Controller {
 			$this->load->view('general/head', $data);
 			$this->load->view('general/header');
 		} else {
+			$this->load->model('audits_model');
+
 			$data['username'] = $this->session->userdata('name');
 			
-			$audit1['name'] = '123';
-			$data['audits'] = array($audit1);
+			$data['audits'] = $this->audits_model->audits();
+			$data['view_url'] = base_url('audit/view');
 
 			$this->load->view('general/head', $data);
 			$this->load->view('general/header', $data);
