@@ -9,8 +9,6 @@ class User extends CI_Controller {
 
 	public function login()
 	{
-		$data['css'] = array('general/main');
-
 		$this->form_validation->set_rules('username', 'username', 'required');
 		$this->form_validation->set_rules('password', 'password', 'required');
 		
@@ -26,7 +24,8 @@ class User extends CI_Controller {
 				echo 'Not validated';
 			}
 		}
-
+		$data['css'] = array('general/main', 'general/form', 'libs/jqueryui');
+		$data['js']  = array('libs/jquery', 'libs/jqueryui', 'user/login');
 		$this->load->view('general/head', $data);
 		$this->load->view('general/header');
 		$this->load->view('user/login');

@@ -66,6 +66,7 @@
 
 	function audit_insert( $audit ) {
 		$this->db->insert('audits', $audit);
+		return $this->db->insert_id();
 	}
 
 	function audit_update( $audit, $data ) {
@@ -80,6 +81,7 @@
 
 	function audit_asset_insert( $audit_asset ) {
 		$this->db->insert( 'audit_assets', $audit_asset );
+		return $this->db->insert_id();
 	}
 
 	function audit_asset_update( $audit_asset, $data ) {

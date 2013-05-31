@@ -1,3 +1,4 @@
+<div class="page-wrapper shadow">
 <header>
 	<a href=<?php echo base_url(); ?> class="title"><h1>audits</h1></a>
 </header>
@@ -7,6 +8,9 @@
 	// Mostrar lo siguiente cuando hay una sesión iniciada
 	if ($this->session->userdata('username') !== false) { ?>
 	<li>Bienvenido, <?php echo $username; ?> | </li>
+	<li><a href=<?php echo '"'.base_url('home').'"'; ?>>Inicio</a> | </li>
+	<li><a href=<?php echo '"'.base_url('audit/add').'"'; ?>>Crear auditoría</a> | </li>
+	<li><a href=<?php echo '"'.base_url('audit/history').'"'; ?>>Historial</a> | </li>
 	<li><a href=<?php echo '"'.base_url('user/logout').'"'; ?>>Cerrar sesión</a></li>
 	<?php }
 	// Mostrar lo siguiente cuando no hay una sesión

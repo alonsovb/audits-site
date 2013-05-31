@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 23-05-2013 a las 04:43:18
+-- Tiempo de generación: 31-05-2013 a las 20:24:34
 -- Versión del servidor: 5.5.24-log
 -- Versión de PHP: 5.3.13
 
@@ -28,11 +28,21 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `assets` (
   `id_asset` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `room` bigint(20) unsigned NOT NULL,
   `code` int(11) NOT NULL,
   PRIMARY KEY (`id_asset`),
   UNIQUE KEY `id_asset` (`id_asset`),
-  UNIQUE KEY `code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  UNIQUE KEY `code` (`code`),
+  KEY `room` (`room`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Volcado de datos para la tabla `assets`
+--
+
+INSERT INTO `assets` (`id_asset`, `room`, `code`) VALUES
+(1, 1, 1),
+(2, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -49,7 +59,15 @@ CREATE TABLE IF NOT EXISTS `audits` (
   PRIMARY KEY (`id_audit`),
   UNIQUE KEY `id_audit` (`id_audit`),
   KEY `room` (`room`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Volcado de datos para la tabla `audits`
+--
+
+INSERT INTO `audits` (`id_audit`, `room`, `date`, `comment`, `completed`) VALUES
+(1, 1, '2013-05-23 00:38:00', '', 0),
+(2, 2, '2013-05-25 16:00:00', '', 0);
 
 -- --------------------------------------------------------
 
@@ -67,6 +85,13 @@ CREATE TABLE IF NOT EXISTS `audit_assets` (
   PRIMARY KEY (`audit`,`asset`),
   KEY `asset` (`asset`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `audit_assets`
+--
+
+INSERT INTO `audit_assets` (`audit`, `asset`, `present`, `state`, `rating`, `comment`) VALUES
+(1, 2, 1, 1, 8, 'Rather good.');
 
 -- --------------------------------------------------------
 
@@ -128,14 +153,16 @@ CREATE TABLE IF NOT EXISTS `rooms` (
   PRIMARY KEY (`id_room`),
   UNIQUE KEY `id_room` (`id_room`),
   KEY `building` (`building`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Volcado de datos para la tabla `rooms`
 --
 
 INSERT INTO `rooms` (`id_room`, `name`, `floor`, `building`) VALUES
-(1, 'Reception', 2, 1);
+(1, 'Reception', 2, 1),
+(2, 'Tech Support', 1, 1),
+(3, 'Tesorery', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -164,6 +191,12 @@ INSERT INTO `users` (`id_user`, `username`, `password`, `name`) VALUES
 --
 
 --
+-- Filtros para la tabla `assets`
+--
+ALTER TABLE `assets`
+  ADD CONSTRAINT `assets_ibfk_1` FOREIGN KEY (`room`) REFERENCES `rooms` (`id_room`);
+
+--
 -- Filtros para la tabla `audits`
 --
 ALTER TABLE `audits`
@@ -173,8 +206,8 @@ ALTER TABLE `audits`
 -- Filtros para la tabla `audit_assets`
 --
 ALTER TABLE `audit_assets`
-  ADD CONSTRAINT `audit_assets_ibfk_2` FOREIGN KEY (`asset`) REFERENCES `assets` (`id_asset`),
-  ADD CONSTRAINT `audit_assets_ibfk_1` FOREIGN KEY (`audit`) REFERENCES `audits` (`id_audit`);
+  ADD CONSTRAINT `audit_assets_ibfk_4` FOREIGN KEY (`asset`) REFERENCES `assets` (`id_asset`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `audit_assets_ibfk_3` FOREIGN KEY (`audit`) REFERENCES `audits` (`id_audit`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `buildings`
