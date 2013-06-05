@@ -1,0 +1,10 @@
+.asset-item div {
+	display: block;
+	margin-top: 1em;
+}
+.rating {
+	width: 3em;
+}
+.slider {
+	width: 10em;
+}

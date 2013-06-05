@@ -1,6 +1,10 @@
+p .icon {
+	display: inline-block;
+}
 .history-item {
 	display: block;
 	font-family: 'Tahoma';
+	margin-top: 0.5em;
 }
 .history-item p {
 	margin: 0 1em 0 0;
