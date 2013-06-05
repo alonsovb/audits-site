@@ -7,18 +7,23 @@ class Audit extends CI_Controller {
 	}
 
 	public function history() {
-		$data['title'] = 'Audits history';
-		$data['js']    = array();
-		$data['css']   = array('general/main');
-
 		if ($this->session->userdata('username') === false) {
 			redirect('user/login');
 		} else {
 			$this->load->model('audits_model');
 
 			$data['username'] = $this->session->userdata('name');
+
+			$data['title'] = 'Audits history';
+			$data['js']    = array('libs/jquery', 'libs/jqueryui', 'audit/history');
+			$data['css']   = array('libs/jqueryui', 'general/main', 'audit/history');
 			
-			$data['audits'] = $this->audits_model->audits();
+			$audits = $this->audits_model->audits();
+			foreach ($audits as $audit) {
+				$date = date_parse($audit->date);
+				$audit->date = $date['day']."/".$date['month']."/".$date['year'];
+			}
+			$data['audits'] = $audits;
 			$data['view_url'] = base_url('audit/view');
 
 			$this->load->view('general/head', $data);

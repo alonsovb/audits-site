@@ -1,0 +1,11 @@
+.history-item {
+	display: block;
+	font-family: 'Tahoma';
+}
+.history-item p {
+	margin: 0 1em 0 0;
+	display: inline;
+}
+.history-item .ui-icon {
+	float: left;
+}
