@@ -1,15 +1,24 @@
 p .icon {
 	display: inline-block;
 }
+.ui-icon {
+	border: 1px solid transparent;
+}
 .history-item {
 	display: block;
 	font-family: 'Tahoma';
-	margin-top: 0.5em;
+	margin-top: 0.8em;
 }
 .history-item p {
 	margin: 0 1em 0 0;
 	display: inline;
 }
-.history-item .ui-icon {
+.history-item .history-item-state {
 	float: left;
+}
+.history-item .history-item-delete {
+	display: inline-block;
+}
+.history-item .history-item-delete {
+	cursor: pointer;
 }

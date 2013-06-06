@@ -2,7 +2,7 @@
 <form method="post" action=<?php echo '"'.base_url('audit/add').'"'; ?>>
 	<p>Seleccione la sala en la que realizará una nueva auditoría.</p>
 	<label for="headquarter">Seleccione la sede</label>
-	<select name="headquarter" id="headquarter"></select>
+	<select name="headquarter" id="headquarter" autofocus></select>
 	<label for="building">Seleccione el edificio</label>
 	<select name="building" id="building"></select>
 	<label for="room">Seleccione la habitación o sala</label>

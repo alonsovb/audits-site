@@ -11,6 +11,10 @@ body {
 li {
 	list-style-type: none;
 }
+textarea {
+	font-family: 'Tahoma', sans-serif;
+	width: 100%;
+}
 ::selection {
 	background-color: #ffbe4f;
 }

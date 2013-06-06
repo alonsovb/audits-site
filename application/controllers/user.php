@@ -9,6 +9,9 @@ class User extends CI_Controller {
 
 	public function login()
 	{
+		if ($this->session->userdata('username') !== false) {
+			redirect('');
+		}
 		$this->form_validation->set_rules('username', 'username', 'required');
 		$this->form_validation->set_rules('password', 'password', 'required');
 		

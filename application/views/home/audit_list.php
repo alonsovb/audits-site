@@ -5,8 +5,9 @@
 	{audits}
 	<li data-finished="{completed}" class="history-item">
 		<span>{date}</span>
-		<span class="ui-icon"></span>
+		<span class="ui-icon history-item-state"></span>
 		<a href="{view_url}/{id_audit}">{hq_name}, {building_name}, Piso {room_floor}, {room_name}</a>
+		<span class="ui-icon ui-icon-trash history-item-delete"></span>
 	</li>
 	{/audits}
 </ul>

@@ -47,7 +47,13 @@ class Audit extends CI_Controller {
 		$data['username'] = $this->session->userdata('name');
 
 		$data['audit'] = $this->audits_model->audit($id_audit);
-		$data['audit_assets'] = $this->audits_model->audit_assets($id_audit);
+		$audit_assets = $this->audits_model->audit_assets($id_audit);
+		foreach ($audit_assets as $audit_asset) {
+			$audit_asset->present = ($audit_asset->present) ? 'checked' : '';
+			$audit_asset->state = ($audit_asset->state) ? 'checked' : '';
+		}
+		$data['audit_assets'] = $audit_assets;
+		$data['history_url'] = base_url('audit/history');
 		
 		$this->load->view('general/head', $data);
 		$this->load->view('general/header', $data);
@@ -58,7 +64,12 @@ class Audit extends CI_Controller {
 	public function view2($id_audit) {
 		$this->load->model('audits_model');
 		var_dump($this->audits_model->audit($id_audit));
-		var_dump($this->audits_model->audit_assets($id_audit));
+		$audit_assets = $this->audits_model->audit_assets($id_audit);
+		foreach ($audit_assets as $audit_asset) {
+			$audit_asset->present = ($audit_asset->present) ? 'checked' : '';
+			$audit_asset->state = ($audit_asset->state) ? 'checked' : '';
+		}
+		var_dump($audit_assets);
 	}
 
 	public function add() {
