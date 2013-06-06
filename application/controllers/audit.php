@@ -29,7 +29,7 @@ class Audit extends CI_Controller {
 
 		$this->load->view('general/head', $data);
 		$this->load->view('general/header', $data);
-		$this->parser->parse('home/audit_list', $data);
+		$this->parser->parse('audit/history', $data);
 		$this->load->view('general/footer');
 	}
 
