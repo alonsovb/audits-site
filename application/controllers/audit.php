@@ -61,17 +61,6 @@ class Audit extends CI_Controller {
 		$this->load->view('general/footer');
 	}
 
-	public function view2($id_audit) {
-		$this->load->model('audits_model');
-		var_dump($this->audits_model->audit($id_audit));
-		$audit_assets = $this->audits_model->audit_assets($id_audit);
-		foreach ($audit_assets as $audit_asset) {
-			$audit_asset->present = ($audit_asset->present) ? 'checked' : '';
-			$audit_asset->state = ($audit_asset->state) ? 'checked' : '';
-		}
-		var_dump($audit_assets);
-	}
-
 	public function add() {
 		if ($this->session->userdata('username') === false) {
 			redirect('user/login');
@@ -94,7 +83,6 @@ class Audit extends CI_Controller {
 			$room = $this->input->post('room');
 			$this->load->model('audits_model');
 			$audit = array('room' => $room,
-				'date' => 'NOW()',
 				'comment' => '');
 			$audit = $this->audits_model->audit_insert($audit);
 			$assets = $this->audits_model->assets($room);

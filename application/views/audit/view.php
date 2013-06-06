@@ -1,5 +1,8 @@
 {audit}
 <h3>{hq_name}, {building_name}, Piso {room_floor}, {room_name}</h3>
+<p>Aquí se muestra información acerca de la auditoría seleccionada (código {id_audit})</p>
+<label for="audit-comment">Comentarios generales de la auditoría:</label>
+<textarea id="audit-comment">{comment}</textarea>
 {/audit}
 <p>La siguiente es la lista de activos para esta auditoría.</p>
 <ul class="asset-list">
@@ -26,5 +29,5 @@
 	</li>
 	{/audit_assets}
 </ul>
-<input type="button" value="Guardar" id="guardar">
-<a href="{history_url}" type="button" id="eliminar">Eliminar</a>
+<a class="action-button" href="#" type="button" id="guardar">Guardar</a>
+<a class="action-button" href="{history_url}" id="eliminar">Eliminar</a>
