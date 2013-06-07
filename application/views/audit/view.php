@@ -7,7 +7,18 @@
 <p>La siguiente es la lista de activos para esta auditoría.</p>
 <ul class="asset-list">
 	{audit_assets}
-	<li class="asset-item">
+	<?php 
+		$asset = json_encode(
+			array(
+				"audit"=>"{audit}",
+				"asset"=>"{id_asset}",
+				"state"=>"{state}",
+				"rating"=>"{rating}",
+				"comment"=>"{comment}"
+				));
+		$asset = htmlspecialchars($asset, ENT_QUOTES);
+	?>
+	<li id="asset{id_asset}" class="asset-item" data-asset="<?php echo $asset; ?>">
 		<h4>Código de activo: {code}</h4>
 		<div class="input-present">
 			<input type="checkbox" id="present{id_asset}" class="present" {present}>

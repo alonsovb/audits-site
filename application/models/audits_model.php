@@ -80,12 +80,13 @@
 	}
 
 	function audit_asset_insert( $audit_asset ) {
-		$this->db->insert( 'audit_assets', $audit_asset );
+		$this->db->insert('audit_assets', $audit_asset );
 		return $this->db->insert_id();
 	}
 
-	function audit_asset_update( $audit_asset, $data ) {
-		$this->db->where( 'id_audit_asset', $audit_asset );
-		$this->db->update( 'audit_assets', $data );
+	function audit_asset_update($audit_asset) {
+		$this->db->where('audit', $audit_asset['audit']);
+		$this->db->where('asset', $audit_asset['asset']);
+		$this->db->update('audit_assets', $audit_asset );
 	}
 }

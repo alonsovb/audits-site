@@ -12,7 +12,6 @@ class Audit extends CI_Controller {
 			return;
 		}
 		$this->load->model('audits_model');
-
 		$data['username'] = $this->session->userdata('name');
 
 		$data['title'] = 'Historial';
@@ -97,5 +96,10 @@ class Audit extends CI_Controller {
 			}
 			redirect('audit/view/'.$audit);
 		}
+	}
+
+	public function update($asset) {
+		$this->load->model('audits_model');
+		$this->audits_model->audit_asset_update(json_decode($asset));
 	}
 }
