@@ -71,7 +71,8 @@
 
 	function audit_update( $audit, $data ) {
 		$this->db->where( 'id_audit', $audit );
-		$this->db->update( 'audit', $data );
+		$this->db->update( 'audits', $data );
+		var_dump($data);
 	}
 
 	function audit_delete( $audit ) {
@@ -84,9 +85,9 @@
 		return $this->db->insert_id();
 	}
 
-	function audit_asset_update($audit_asset) {
-		$this->db->where('audit', $audit_asset['audit']);
-		$this->db->where('asset', $audit_asset['asset']);
+	function audit_asset_update($audit_id, $asset_id, $audit_asset) {
+		$this->db->where('audit', $audit_id);
+		$this->db->where('asset', $asset_id);
 		$this->db->update('audit_assets', $audit_asset );
 	}
 }

@@ -13,6 +13,6 @@
 .comment {
 	display: block;
 }
-#guardar, #eliminar {
+.action-button {
 	margin-bottom: 1em;
 }

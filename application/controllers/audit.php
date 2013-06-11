@@ -46,6 +46,7 @@ class Audit extends CI_Controller {
 		$data['username'] = $this->session->userdata('name');
 
 		$data['audit'] = $this->audits_model->audit($id_audit);
+
 		$audit_assets = $this->audits_model->audit_assets($id_audit);
 		foreach ($audit_assets as $audit_asset) {
 			$audit_asset->present = ($audit_asset->present) ? 'checked' : '';
@@ -53,6 +54,7 @@ class Audit extends CI_Controller {
 		}
 		$data['audit_assets'] = $audit_assets;
 		$data['history_url'] = base_url('audit/history');
+		$data['ajax_url'] = base_url('audit/update');
 		
 		$this->load->view('general/head', $data);
 		$this->load->view('general/header', $data);
@@ -98,8 +100,34 @@ class Audit extends CI_Controller {
 		}
 	}
 
-	public function update($asset) {
+	public function update($tipo) {
 		$this->load->model('audits_model');
-		$this->audits_model->audit_asset_update(json_decode($asset));
+		if ($tipo === 'asset') {
+			$asset_id = $this->input->post('asset');
+			$audit_id = $this->input->post('audit');
+			$asset = new stdClass();
+			$asset->rating 	= intval($this->input->post('rating'));
+			$asset->present = $this->input->post('present');
+			if ($asset->present == 'true') {
+				$asset->present = 1;
+			} else {
+				$asset->present = 0;
+			}
+			$asset->state 	= $this->input->post('state');
+			if ($asset->state == 'true') {
+				$asset->state = 1;
+			} else {
+				$asset->state = 0;
+			}
+			$asset->comment = $this->input->post('comment');
+
+			$this->audits_model->audit_asset_update($audit_id, $asset_id, $asset);
+		} else if ($tipo === 'audit') {
+			$audit_id = $this->input->post('audit_id');
+			$audit = new stdClass();
+			$audit->comment 	= $this->input->post('comment');
+			$audit->completed 	= $this->input->post('completed');
+			$this->audits_model->audit_update($audit_id, $audit);
+		}
 	}
 }

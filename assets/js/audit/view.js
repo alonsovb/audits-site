@@ -1,7 +1,9 @@
 $(function() {
+	var updateUrl = $('#ajax-url').val(),
+		idAudit   = $('#id-audit').val();
 	$sliders = $('.slider');
 	$ratings = $('.rating');
-	$save = $('#guardar');
+	$saveButtons = $('#guardar, #completar');
 	$sliders.slider({
 		min: 1,
 		max: 10,
@@ -22,7 +24,7 @@ $(function() {
 	if ($('.asset-list li').length > 2) {
 		$('.page-wrapper').css('height', 'auto');
 	}
-	$('#guardar, #eliminar').button();
+	$('#guardar, #eliminar, #completar').button();
 	$('#eliminar').on('click', function (event) {
 		if (confirm('¿Desea eliminar esta auditoría?')) {
 			// Eliminar auditoría
@@ -32,20 +34,38 @@ $(function() {
 	});
 
 	//Evento en boton de guardar auditoria
-	$save.on('click', function(){
-		var assets = $('.asset-list').children();
-		for(var i = 0; i < assets.length; i++){
-			console.log(assets[i].id);
-			var asset = $('#' + assets[i].id);
-			var data = asset.data('asset');
-			var id_asset = data.asset;
-			data.state = $('#state' + id_asset).val();
-			data.rating = $('#rating' + id_asset).val();
-			data.comment = $('#comment' + id_asset).val();
-			asset.data('asset', data);
-			//Falta definir url correcto para la llamada POST
-			var baseurl = 'http://localhost/audits-site/';
-			$.post(baseurl + 'update/' + JSON.stringify(data));
-		}
+	$saveButtons.on('click', function(){
+		var assets = $('.asset-item');
+		$.each(assets, function(index, asset) {
+			present = $(asset).find('.present').is(':checked');
+			state 	= $(asset).find('.state').is(':checked');
+			rating 	= $(asset).find('.rating').val();
+			comment = $(asset).find('.comment').val();
+			asset 	= $(asset).data('asset');
+			$.ajax({
+				type: 'post',
+				url: updateUrl + '/asset',
+				data: {
+					"present": present,
+					"state": state,
+					"rating": rating,
+					"comment": comment,
+					"asset": asset,
+					"audit": idAudit
+				}
+			});
+		});
+		completar = $(this).data('completar');
+		$.ajax({
+			type: 'post',
+			url: updateUrl + '/audit',
+			data: {
+				"audit_id": idAudit,
+				"comment": $('#audit-comment').val(),
+				"completed": completar
+			}
+		}).done(function(data) {
+			console.log(data);
+		});
 	});
 });

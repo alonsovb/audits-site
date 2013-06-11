@@ -1,24 +1,15 @@
 {audit}
 <h3>{hq_name}, {building_name}, Piso {room_floor}, {room_name}</h3>
 <p>Aquí se muestra información acerca de la auditoría seleccionada (código {id_audit})</p>
+<input type="hidden" value="{ajax_url}" id="ajax-url">
+<input type="hidden" value="{id_audit}" id="id-audit">
 <label for="audit-comment">Comentarios generales de la auditoría:</label>
-<textarea id="audit-comment">{comment}</textarea>
+<textarea id="audit-comment" name="comment">{comment}</textarea>
 {/audit}
 <p>La siguiente es la lista de activos para esta auditoría.</p>
 <ul class="asset-list">
 	{audit_assets}
-	<?php 
-		$asset = json_encode(
-			array(
-				"audit"=>"{audit}",
-				"asset"=>"{id_asset}",
-				"state"=>"{state}",
-				"rating"=>"{rating}",
-				"comment"=>"{comment}"
-				));
-		$asset = htmlspecialchars($asset, ENT_QUOTES);
-	?>
-	<li id="asset{id_asset}" class="asset-item" data-asset="<?php echo $asset; ?>">
+	<li id="asset{id_asset}" class="asset-item" data-asset="{id_asset}">
 		<h4>Código de activo: {code}</h4>
 		<div class="input-present">
 			<input type="checkbox" id="present{id_asset}" class="present" {present}>
@@ -40,5 +31,6 @@
 	</li>
 	{/audit_assets}
 </ul>
-<a class="action-button" href="#" type="button" id="guardar">Guardar</a>
+<a class="action-button" href="#" type="button" id="guardar" data-completar="0">Guardar</a>
+<a class="action-button" href="#" type="button" id="completar" data-completar="1">Completar</a>
 <a class="action-button" href="{history_url}" id="eliminar">Eliminar</a>
