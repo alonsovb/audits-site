@@ -1,6 +1,9 @@
 $(function() {
-	var updateUrl = $('#ajax-url').val(),
-		idAudit   = $('#id-audit').val();
+	var updateUrl 	= $('#ajax-url').val(),
+		historyUrl 	= $('#history-url').val(),
+		deleteUrl 	= $('#delete-url').val(),
+		idAudit  	= $('#id-audit').val();
+		disabled 	= $('#audit-complete').val();
 	$sliders = $('.slider');
 	$ratings = $('.rating');
 	$saveButtons = $('#guardar, #completar');
@@ -17,6 +20,10 @@ $(function() {
 		$rating = $(this).siblings('.rating');
 		$(this).slider("value", $rating.val());
 	});
+	if (disabled == 'disabled') {
+		$sliders.slider({ disabled: true });
+		$saveButtons.hide();
+	}
 	$ratings.on('change', function() {
 		$slider = $(this).siblings('.slider');
 		$slider.slider('value', $(this).val());
@@ -26,10 +33,19 @@ $(function() {
 	}
 	$('#guardar, #eliminar, #completar').button();
 	$('#eliminar').on('click', function (event) {
+		event.preventDefault();
 		if (confirm('¿Desea eliminar esta auditoría?')) {
-			// Eliminar auditoría
-		} else {
-			event.preventDefault();
+			$.ajax({
+				type: 'post',
+				url: deleteUrl,
+				data: {
+					"audit_id": idAudit
+				}
+			}).done(function(data) {
+				if (data == 'true') {
+					window.location.href = historyUrl;
+				}
+			});
 		}
 	});
 
@@ -65,7 +81,7 @@ $(function() {
 				"completed": completar
 			}
 		}).done(function(data) {
-			console.log(data);
+			window.location.href = historyUrl;
 		});
 	});
 });

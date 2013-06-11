@@ -25,6 +25,7 @@ class Audit extends CI_Controller {
 		}
 		$data['audits'] = $audits;
 		$data['view_url'] = base_url('audit/view');
+		$data['delete_url'] = base_url('audit/delete');
 
 		$this->load->view('general/head', $data);
 		$this->load->view('general/header', $data);
@@ -45,7 +46,8 @@ class Audit extends CI_Controller {
 
 		$data['username'] = $this->session->userdata('name');
 
-		$data['audit'] = $this->audits_model->audit($id_audit);
+		$audit = $this->audits_model->audit($id_audit);
+		$data['audit'] = $audit;
 
 		$audit_assets = $this->audits_model->audit_assets($id_audit);
 		foreach ($audit_assets as $audit_asset) {
@@ -55,6 +57,8 @@ class Audit extends CI_Controller {
 		$data['audit_assets'] = $audit_assets;
 		$data['history_url'] = base_url('audit/history');
 		$data['ajax_url'] = base_url('audit/update');
+		$data['delete_url'] = base_url('audit/delete');
+		$data['disabled'] = ($audit[0]->completed == 1) ? 'disabled' : '';
 		
 		$this->load->view('general/head', $data);
 		$this->load->view('general/header', $data);
@@ -129,5 +133,12 @@ class Audit extends CI_Controller {
 			$audit->completed 	= $this->input->post('completed');
 			$this->audits_model->audit_update($audit_id, $audit);
 		}
+	}
+
+	public function delete() {
+		$this->load->model('audits_model');
+		$audit_id = $this->input->post('audit_id');
+		$this->audits_model->audit_delete($audit_id);
+		echo 'true';
 	}
 }

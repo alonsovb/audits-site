@@ -18,6 +18,9 @@ textarea {
 ::selection {
 	background-color: #ffbe4f;
 }
+input:disabled, textarea:disabled {
+	background-color: white !important;
+}
 
 .page-wrapper {
 	width: 800px;
