@@ -1,11 +1,18 @@
 $(function () {
+
 	$('input[type=button], input[type=submit], button').button();
+	
+	// Botón de registro de nueva auditoría
 	$regButton = $('#auditoria-boton-registrar').button('disable');
 
+	// Selects de sedes, edificios y salas
 	var $headquarters	= $('#headquarter'),
 		$buildings		= $('#building'),
 		$rooms			= $('#room');
-	headquarters(function (data) {
+	var baseUrl = $('#base-url').val();
+
+	// Obtener datos de sedes y mostrarlas en Select
+	headquarters(baseUrl, function (data) {
 		var hqs = eval( '(' + data + ') ');
 		for (var i in hqs) {
 			var option = $('<option>', {
@@ -16,10 +23,13 @@ $(function () {
 		}
 		$headquarters.trigger('change');
 	});
+
+	// Obtener datos de edificios y mostrarlas en Select
+	// al seleccionar una nueva sede
 	$headquarters.on('change', function(data) {
 		$buildings.empty();
 		var hq = parseInt($headquarters.val(), 10);
-		buildings(hq, function(data) {
+		buildings(hq, baseUrl, function(data) {
 			var bs = eval( '(' + data + ') ');
 			for (var i in bs) {
 				var option = $('<option>', {
@@ -31,10 +41,13 @@ $(function () {
 			$buildings.trigger('change');
 		});
 	});
+
+	// Obtener datos de salas y mostrarlas en Select
+	// al seleccionar un nuevo edificio
 	$buildings.on('change', function(data) {
 		$rooms.empty();
 		var building = parseInt($buildings.val(), 10);
-		rooms(building, function(data) {
+		rooms(building, baseUrl, function(data) {
 			var rs = eval( '(' + data + ') ');
 			for (var i in rs) {
 				var option = $('<option>', {
@@ -46,6 +59,9 @@ $(function () {
 			$rooms.trigger('change');
 		});
 	});
+
+	// Habilitar botón de registrar al encontrar una
+	// sala válida
 	$rooms.on('change', function(data) {
 		if ($rooms.val() === null) {
 			$regButton.button('disable');

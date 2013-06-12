@@ -1,5 +1,6 @@
 <h3>Nueva auditoría</h3>
-<form method="post" action=<?php echo '"'.base_url('audit/add').'"'; ?>>
+<form method="post" action="{add_url}">
+	<input type="hidden" value="{base_url}" id="base-url">
 	<p>Seleccione la sala en la que realizará una nueva auditoría.</p>
 	<label for="headquarter">Seleccione la sede</label>
 	<select name="headquarter" id="headquarter" autofocus></select>
